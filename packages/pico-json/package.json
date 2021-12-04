@@ -1,9 +1,22 @@
 {
   "name": "pico-json",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Zero dependencies, small, fast, vanilla TypeScript object serializer with very compact binary format that is also quite compressible via lz4 and deflate",
   "author": "Daniel Rolf",
+  "homepage": "https://github.com/derolf/pico-json",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/derolf/pico-json.git",
+    "directory": "packages/pico-json"
+  },
+  "keywords": [
+    "json",
+    "serializer",
+    "codec",
+    "encoder",
+    "binary"
+  ],
   "license": "MIT",
   "main": "dist/index.cjs",
   "module": "dist/index.module.js",
@@ -12,7 +25,8 @@
     "default": "./dist/index.modern.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "unpkg": "dist/index.umd.js",
   "types": "dist/index.d.ts",
@@ -22,6 +36,7 @@
     "lint": "eslint src --fix",
     "test": "jest"
   },
+  "sideEffects": false,
   "source": "src/index.ts",
   "devDependencies": {
     "@types/jest": "^27.0.3",
@@ -35,5 +50,8 @@
     "prettier": "^2.5.0",
     "ts-jest": "^27.0.7",
     "typescript": "^4.5.2"
+  },
+  "mangle": {
+    "regex": "^_"
   }
 }

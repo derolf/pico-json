@@ -16,7 +16,7 @@ Zero dependencies, small, fast, vanilla TypeScript object serializer with very c
 
 Please note that `pico-json` uses `Buffer` under the hood. So, if you want to use it in a browser environment, please provide an appropriate polyfill.
 
-The `pico-json` packages just exports two functions:
+The `pico-json` package just exports two functions:
 
 ```TypeScript
 function encode(obj: unknown): Buffer;
@@ -38,7 +38,7 @@ To decode an object from a `Buffer`, do:
 import { decode } from "pico-json";
 
 const buf = ...;
-const obj = decode(obj);
+const obj = decode(buf);
 ```
 
 That's all.

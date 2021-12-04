@@ -71,6 +71,10 @@ class Encoder {
       case "undefined":
         this._putFlagValue(UNDEFINED, 0);
         return;
+      case "object":
+        break;
+      default:
+        throw new Error(`Unsupported object type: ${typeof value}`);
     }
 
     if (Array.isArray(value)) {

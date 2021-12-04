@@ -1,4 +1,4 @@
-import * as nano from "pico-json";
+import * as pico from "pico-json";
 import fetch from "node-fetch";
 import { hrtime } from "process";
 import * as zlib from "zlib";
@@ -68,7 +68,7 @@ const withLz4 = (codec: Codec) => ({
 });
 
 const codecs: Codec[] = [
-  { name: "pico-json", encode: nano.encode, decode: nano.decode },
+  { name: "pico-json", encode: pico.encode, decode: pico.decode },
   { name: "json", encode: (d) => Buffer.from(JSON.stringify(d)), decode: (buf) => JSON.parse(buf.toString()) },
   { name: "msgpack", encode: (d) => Buffer.from(msgpack.encode(d)), decode: (buf) => msgpack.decode(buf) },
   { name: "bson", encode: (d) => Buffer.from(bson.serialize(d)), decode: (buf) => bson.deserialize(buf) },

@@ -1,4 +1,4 @@
-import * as nano from "..";
+import * as pico from "..";
 
 const simpleObj: Record<string, unknown> = {
   undefined_: undefined,
@@ -32,17 +32,26 @@ test("Decoding encoded values should equal", () => {
   const testCases = [[], [1], [false], [false, true], simpleObj, Object.values(simpleObj), { a: simpleObj, b: simpleObj, arr: [simpleObj, simpleObj] }];
 
   for (const data of testCases) {
-    expect(nano.decode(nano.encode(data))).toEqual(data);
+    expect(pico.decode(pico.encode(data))).toEqual(data);
   }
 });
 
 test("Huge array", () => {
   const data = [...new Int8Array(70000).map((_) => 99)];
-  expect(nano.decode(nano.encode(data))).toEqual(data);
+  expect(pico.decode(pico.encode(data))).toEqual(data);
 });
 
 test("Unknown flag should throw Error", () => {
-  const buf = Buffer.alloc(1);
-  buf[0] = 0xff;
-  expect(() => nano.decode(buf)).toThrowError(`Unknown flag: 240`);
+  const buf = Buffer.alloc(2);
+  buf[0] = 1;
+  buf[1] = 240;
+  expect(() => pico.decode(buf)).toThrowError(`Unknown flag: 240`);
+});
+
+test("Function should throw Error", () => {
+  expect(() =>
+    pico.encode(() => {
+      /**/
+    }),
+  ).toThrowError(`Unsupported object type: function`);
 });
