@@ -1,0 +1,4 @@
+{
+  "jestrunner.jestPath": "node_modules/jest/bin/jest.js",
+  "debug.allowBreakpointsEverywhere": true
+}

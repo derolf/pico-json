@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "importsNotUsedAsValues": "error",
+    "noEmit": true,
+    "strict": true,
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true
+  }
+}
