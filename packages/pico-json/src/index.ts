@@ -18,10 +18,14 @@ const STRING = 2 << FLAG_SHIFT;
 const FLOAT = 3 << FLAG_SHIFT;
 const POSITIVE_INT = 4 << FLAG_SHIFT;
 const NEGATIVE_INT = 5 << FLAG_SHIFT;
-const UNDEFINED = 6 << FLAG_SHIFT;
-const NULL = 7 << FLAG_SHIFT;
-const FALSE = 8 << FLAG_SHIFT;
-const TRUE = 9 << FLAG_SHIFT;
+const BUILTIN = 6 << FLAG_SHIFT;
+
+const BUILTIN_UNDEFINED = 0;
+const BUILTIN_NULL = 1;
+const BUILTIN_FALSE = 2;
+const BUILTIN_TRUE = 3;
+
+const BUILTINS = [undefined, null, false, true]; // must match the BUILTIN_* consts
 
 const BUFFER_SIZE = 65536;
 
@@ -33,8 +37,7 @@ class Encoder {
   _flagBuffer = Buffer.alloc(BUFFER_SIZE);
   _flagLength = 0;
 
-  _keys: Record<string, number> = {};
-  _keysCount = 0;
+  _keys = new Map<string, number>();
 
   /**
    * After calling finish, the encoder can't be used anymore!
@@ -66,10 +69,10 @@ class Encoder {
         return;
       }
       case "boolean":
-        this._putFlagValue(value ? TRUE : FALSE, 0);
+        this._putFlagValue(BUILTIN, value ? BUILTIN_TRUE : BUILTIN_FALSE);
         return;
       case "undefined":
-        this._putFlagValue(UNDEFINED, 0);
+        this._putFlagValue(BUILTIN, BUILTIN_UNDEFINED);
         return;
       case "object":
         break;
@@ -86,7 +89,7 @@ class Encoder {
     }
 
     if (value === null) {
-      this._putFlagValue(NULL, 0);
+      this._putFlagValue(BUILTIN, BUILTIN_NULL);
       return;
     }
 
@@ -96,10 +99,10 @@ class Encoder {
     this._putFlagValue(OBJECT, entries.length);
 
     for (const [key, value] of entries) {
-      let keyIndex = this._keys[key];
+      let keyIndex = this._keys.get(key);
       if (keyIndex === undefined) {
-        keyIndex = this._keysCount++;
-        this._keys[key] = keyIndex;
+        keyIndex = this._keys.size;
+        this._keys.set(key, keyIndex);
         this._putVarInt(key.length);
         this._putString(key);
       }
@@ -190,14 +193,8 @@ class Decoder {
     this._flagOffset--;
     const flag = flagValue & ~FLAG_VALUE_MASK;
     switch (flag) {
-      case UNDEFINED:
-        return undefined;
-      case NULL:
-        return null;
-      case FALSE:
-        return false;
-      case TRUE:
-        return true;
+      case BUILTIN:
+        return BUILTINS[this._getFlagValue(flagValue)];
       case POSITIVE_INT:
         return this._getFlagValue(flagValue);
       case NEGATIVE_INT:

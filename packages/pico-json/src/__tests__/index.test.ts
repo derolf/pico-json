@@ -15,12 +15,18 @@ const simpleObj: Record<string, unknown> = {
   int_n1000000: -1000000,
   int_1000000000: 1000000000,
   int_n1000000000: -1000000000,
-  someint: 1450725865,
+  someint: 1450725865, // failed once
   float_0: 0.5,
   float_1: 1.5,
   float_n1: -1.5,
   float_1000: 1000.5,
   float_n1000: -1000.5,
+  // check that we don't mess up builtin property names
+  constructor: "a",
+  __proto__: "b",
+  toString: "c",
+  prototype: "d",
+  defineProperty: "e",
 };
 
 // some more keys

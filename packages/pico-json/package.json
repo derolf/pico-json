@@ -1,7 +1,7 @@
 {
   "name": "pico-json",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Zero dependencies, small, fast, vanilla TypeScript object serializer with very compact binary format that is also quite compressible via lz4 and deflate",
   "author": "Daniel Rolf",
   "homepage": "https://github.com/derolf/pico-json",
@@ -34,7 +34,8 @@
     "build": "rm -rf dist && microbundle",
     "format": "prettier --write --plugin-search-dir=. **/*.ts **/*.js",
     "lint": "eslint src --fix",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "pnpm run test && pnpm run build"
   },
   "sideEffects": false,
   "source": "src/index.ts",
