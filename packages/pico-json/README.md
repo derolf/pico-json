@@ -1,4 +1,4 @@
-# pico-json
+# pico-json [![Lint, Test, Build](https://github.com/derolf/pico-json/actions/workflows/lint-test-build.yml/badge.svg)](https://github.com/derolf/pico-json/actions/workflows/lint-test-build.yml) [![codecov](https://codecov.io/gh/derolf/pico-json/branch/master/graph/badge.svg?token=SPPU1655OL)](https://codecov.io/gh/derolf/pico-json) [![npm](https://img.shields.io/npm/v/pico-json)](https://npmjs.com/pico-json) [![npm](https://img.shields.io/npm/l/pico-json)](./LICENSE)
 
 Zero dependencies, small, fast, vanilla TypeScript object serializer with very compact binary format that is also quite compressible via lz4 and deflate.
 
